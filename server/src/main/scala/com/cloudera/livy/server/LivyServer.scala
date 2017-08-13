@@ -24,7 +24,6 @@ import javax.servlet._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-
 import org.apache.hadoop.security.{SecurityUtil, UserGroupInformation}
 import org.apache.hadoop.security.authentication.server._
 import org.eclipse.jetty.servlet.FilterHolder
@@ -32,11 +31,11 @@ import org.scalatra.metrics.MetricsBootstrap
 import org.scalatra.metrics.MetricsSupportExtensions._
 import org.scalatra.ScalatraServlet
 import org.scalatra.servlet.{MultipartConfig, ServletApiImplicits}
-
 import com.cloudera.livy._
 import com.cloudera.livy.server.auth.LdapAuthenticationHandlerImpl
 import com.cloudera.livy.server.batch.BatchSessionServlet
 import com.cloudera.livy.server.interactive.InteractiveSessionServlet
+import com.cloudera.livy.server.metrics.MetricsPublisher
 import com.cloudera.livy.server.recovery.{SessionStore, StateStore}
 import com.cloudera.livy.server.ui.UIServlet
 import com.cloudera.livy.sessions.{BatchSessionManager, InteractiveSessionManager}
@@ -192,11 +191,18 @@ class LivyServer extends Logging {
               mount(context, staticResourceServlet, "/static/*")
               mount(context, uiRedirectServlet("/ui/"), "/*")
             } else {
-              mount(context, uiRedirectServlet("/metrics"), "/*")
+              mount(context, uiRedirectServlet("/metrics-admin"), "/*")
             }
 
-            context.mountMetricsAdminServlet("/metrics")
-
+            context.mountMetricsAdminServlet("/metrics-admin")
+            context.mountHealthCheckServlet("/health")
+            context.mountMetricsServlet("/metrics")
+            context.mountThreadDumpServlet("/thread-dump")
+            context.installInstrumentedFilter("/*")
+            if (livyConf.getBoolean(METRICS_REPORTING_ENABLED)) {
+              val metricsPublisher = new MetricsPublisher(metricRegistry, healthCheckRegistry)
+              metricsPublisher.startReporting(livyConf)
+            }
             mount(context, livyVersionServlet, "/version/*")
           } catch {
             case e: Throwable =>

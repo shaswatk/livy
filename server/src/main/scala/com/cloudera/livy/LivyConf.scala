@@ -102,6 +102,13 @@ object LivyConf {
   val AUTH_LDAP_ENABLE_START_TLS = Entry("livy.server.auth.ldap.enable-start-tls", "false")
   val AUTH_LDAP_SECURITY_AUTH = Entry("livy.server.auth.ldap.security-authentication", "simple")
 
+  //Metrics reporting properties
+  val METRICS_REPORTING_ENABLED = Entry("livy.server.metrics.reporting.enabled", false)
+  // Represent the class name of livy metrics reporter.
+  val CUSTOM_METRICS_REPORTER_CLASS_NAME = Entry("livy.server.metrics.reporter.name", null)
+  // Represent the metrics server URL.
+  val METRICS_REPORTER_SERVER_URL = Entry("livy.server.metrics.server.url", null)
+
   /**
    * Recovery mode of Livy. Possible values:
    * off: Default. Turn off recovery. Every time Livy shuts down, it stops and forgets all sessions.

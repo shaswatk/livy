@@ -92,6 +92,9 @@ start_livy_server() {
   if [ -n "$YARN_CONF_DIR" ]; then
     LIVY_CLASSPATH="$LIVY_CLASSPATH:$YARN_CONF_DIR"
   fi
+  if [ -n "$LIVY_EXTERNAL_LIB_DIR" ]; then
+    LIVY_CLASSPATH="$LIVY_CLASSPATH:$LIVY_EXTERNAL_LIB_DIR/*"
+  fi
 
   command="$RUNNER $LIVY_SERVER_JAVA_OPTS -cp $LIVY_CLASSPATH:$CLASSPATH com.cloudera.livy.server.LivyServer"
 

@@ -21,11 +21,14 @@ package com.cloudera.livy.server
 import javax.servlet.http.HttpServletRequest
 
 import org.scalatra._
+import org.scalatra.metrics.MetricsSupport
+
 import scala.concurrent._
 import scala.concurrent.duration._
 import scala.sys.process._
 
 import com.cloudera.livy.{LivyConf, Logging}
+import com.cloudera.livy.server.metrics.MetricsConstants
 import com.cloudera.livy.sessions.{Session, SessionManager}
 import com.cloudera.livy.sessions.Session.RecoveryMetadata
 
@@ -46,6 +49,7 @@ abstract class SessionServlet[S <: Session, R <: RecoveryMetadata](
   with MethodOverride
   with UrlGeneratorSupport
   with GZipSupport
+  with MetricsSupport
 {
   /**
    * Creates a new session based on the current request. The implementation is responsible for
@@ -110,6 +114,7 @@ abstract class SessionServlet[S <: Session, R <: RecoveryMetadata](
       sessionManager.delete(session.id) match {
         case Some(future) =>
           Await.ready(future, Duration.Inf)
+          counter(MetricsConstants.SESSION_DELETE_REQUEST_COUNTER) += 1
           Ok(Map("msg" -> "deleted"))
 
         case None =>
@@ -119,6 +124,7 @@ abstract class SessionServlet[S <: Session, R <: RecoveryMetadata](
   }
 
   post("/") {
+    counter(MetricsConstants.SESSION_CREATE_REQUEST_COUNTER) += 1
     val session = sessionManager.register(createSession(request))
     // Because it may take some time to establish the session, update the last activity
     // time before returning the session info to the client.
