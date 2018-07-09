@@ -174,6 +174,11 @@
         <enabled>false</enabled>
       </snapshots>
     </repository>
+    <repository>
+      <id>artifactory</id>
+      <name>LinkedIn's Artifactory</name>
+      <url>http://artifactory.corp.linkedin.com:8081/artifactory/release/</url>
+    </repository>
   </repositories>
 
   <modules>

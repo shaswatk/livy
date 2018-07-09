@@ -76,6 +76,78 @@
     </dependency>
 
     <dependency>
+      <groupId>com.google.protobuf</groupId>
+      <artifactId>protobuf-java</artifactId>
+      <version>3.4.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.linkedin.datavault-token-internal</groupId>
+      <artifactId>datavault-token-internal-impl</artifactId>
+      <version>3.0.1-protobuf3.3.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.linkedin.interservice-auth</groupId>
+      <artifactId>interservice-auth-datavault-authz-impl</artifactId>
+      <version>10.1.51</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.linkedin.interservice-auth</groupId>
+      <artifactId>interservice-auth-datavault-common</artifactId>
+      <version>10.1.51</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.linkedin.interservice-auth</groupId>
+      <artifactId>interservice-auth-datavault-token-api</artifactId>
+      <version>10.1.51</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.linkedin.models</groupId>
+      <artifactId>models</artifactId>
+      <version>25.0.13</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.linkedin.pegasus</groupId>
+      <artifactId>data</artifactId>
+      <version>20.0.22</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.linkedin.resource-identity</groupId>
+      <artifactId>resource-identity-urn</artifactId>
+      <version>6.0.3</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.linkedin.security-crypto</groupId>
+      <artifactId>security-crypto</artifactId>
+      <version>5.0.19</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.linkedin.security-member-token</groupId>
+      <artifactId>member-token</artifactId>
+      <version>5.3.14</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.linkedin.util</groupId>
+      <artifactId>util-core</artifactId>
+      <version>19.0.19</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.linkedin.util</groupId>
+      <artifactId>util-factory</artifactId>
+      <version>9.0.145</version>
+    </dependency>
+
+    <dependency>
       <groupId>edu.internet2.middleware.grouper</groupId>
       <artifactId>grouper-ws</artifactId>
       <exclusions>

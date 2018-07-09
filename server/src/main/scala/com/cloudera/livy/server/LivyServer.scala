@@ -24,7 +24,6 @@ import javax.servlet._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-
 import org.apache.hadoop.security.{SecurityUtil, UserGroupInformation}
 import org.apache.hadoop.security.authentication.server._
 import org.eclipse.jetty.servlet.FilterHolder
@@ -32,7 +31,6 @@ import org.scalatra.metrics.MetricsBootstrap
 import org.scalatra.metrics.MetricsSupportExtensions._
 import org.scalatra.ScalatraServlet
 import org.scalatra.servlet.{MultipartConfig, ServletApiImplicits}
-
 import com.cloudera.livy._
 import com.cloudera.livy.server.auth.LdapAuthenticationHandlerImpl
 import com.cloudera.livy.server.batch.BatchSessionServlet
@@ -241,7 +239,8 @@ class LivyServer extends Logging {
           livyConf.get(LivyConf.AUTH_LDAP_ENABLE_START_TLS))
         server.context.addFilter(holder, "/*", EnumSet.allOf(classOf[DispatcherType]))
         info("LDAP auth enabled.")
-     case null =>
+
+      case null =>
         // Nothing to do.
 
       case other =>
